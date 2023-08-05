@@ -17,6 +17,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.RetryPolicy
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.chatgpt.ui.theme.ChatGPTTheme
 import org.json.JSONArray
@@ -58,6 +60,7 @@ class MainActivity : ComponentActivity() {
         jsonObject.put("model", "gpt-3.5-turbo")
         jsonObject.put("temperature", 0)
         jsonObject.put("top_p", 1)
+        jsonObject.put("max_tokens", 2000)
         jsonObject.put("frequency_penalty", 0.0)
         jsonObject.put("presence_penalty", 0.0)
         val stringRequest = object: JsonObjectRequest(
@@ -77,6 +80,20 @@ class MainActivity : ComponentActivity() {
                 return params;
             }
         }
+        stringRequest.setRetryPolicy(object: RetryPolicy{
+            override fun getCurrentTimeout(): Int {
+                return 60000;
+            }
+
+            override fun getCurrentRetryCount(): Int {
+                return 15;
+            }
+
+            override fun retry(error: VolleyError?) {
+
+            }
+
+        })
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest)
