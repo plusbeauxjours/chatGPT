@@ -64,16 +64,16 @@ class MainActivity : ComponentActivity() {
             Request.Method.POST, url,jsonObject,
             Response.Listener<JSONObject> { response ->
                 // Display the first 500 characters of the response string.
-                response.getJSONArray("choices").getJSONObject(0).getString("finish_reason")
-                resultTv.text = "Response is: ${response.getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content")}"
+                var answer = response.getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content")
+                resultTv.text = answer
             },
-            Response.ErrorListener { error ->resultTv.text = messages.toString() }){
+            Response.ErrorListener { error -> resultTv.text = error.toString() }){
             override fun getHeaders(): MutableMap<String, String> {
                 val params: MutableMap<String, String> = HashMap()
                 // adding headers on below line.
                 params["Content-Type"] = "application/json"
                 params["Authorization"] =
-                    "Bearer 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"
+                    "Bearer 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"
                 return params;
             }
         }
