@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
     }
 
     fun performAction(input: String){
-        resultTv.text = input.toString()
         val queue = Volley.newRequestQueue(this)
         val url = "https://api.openai.com/v1/chat/completions"
 
@@ -76,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 // adding headers on below line.
                 params["Content-Type"] = "application/json"
                 params["Authorization"] =
-                    "Bearer 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"
+                    "Bearer"
                 return params;
             }
         }
